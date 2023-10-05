@@ -14,10 +14,10 @@ def do_pack():
           Otherwise, it should return None
     """
     d = datetime.now()
-    file_name = f"web_static_{d.year}{d.month}{d.day}\
-                  {d.hour}{d.minute}{d.second}.tgz"
+    file_name = f"web_static_{d.year}{d.month}{d.day}"\
+                f"{d.hour}{d.minute}{d.second}.tgz"
     local("mkdir -p versions")
-    res = local(f"tar -cvzf versions/{file_name} web_static", )
+    res = local(f"tar -cvzf versions/{file_name} web_static")
     if res.succeeded:
         return f"versions/{file_name}"
     else:
