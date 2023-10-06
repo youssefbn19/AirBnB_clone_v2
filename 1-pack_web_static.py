@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ This module contains do_pack function
 """
-from fabric.api import local
+from fabric.api import local, task
 from datetime import datetime
 
 
+@task
 def do_pack():
     """
       Generates a .tgz archive from the contents of the web_static
