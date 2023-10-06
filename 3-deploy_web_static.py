@@ -5,9 +5,12 @@ from fabric.api import put, run, env, local
 from os import path
 from datetime import datetime
 
+from invoke import task
+
 env.hosts = ["34.239.255.45", "52.91.182.206"]
 
 
+@task
 def do_pack():
     """
       Generates a .tgz archive from the contents of the web_static
@@ -27,6 +30,7 @@ def do_pack():
         return None
 
 
+@task
 def do_deploy(archive_path):
     """
       Distributes an archive to a server web servers.
@@ -54,6 +58,7 @@ def do_deploy(archive_path):
         return False
 
 
+@task
 def deploy():
     """
         Creates and distributes an archive to a web servers
