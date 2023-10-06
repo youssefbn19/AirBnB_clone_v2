@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """ This module contains do_deloy function
 """
-from fabric.api import put, run, env, local
+from fabric.api import put, run, env, local, task
 from os import path
 from datetime import datetime
 
-from invoke import task
 
 env.hosts = ["34.239.255.45", "52.91.182.206"]
 
