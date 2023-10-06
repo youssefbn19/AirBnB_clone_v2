@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """ This module contains do_deloy function
 """
-from fabric.api import put, run, env, local
+from fabric.api import put, run, env, local, task
 from os import path
 from datetime import datetime
 
 env.hosts = ["34.239.255.45", "52.91.182.206"]
 
-
+@task
 def do_pack():
     """
       Generates a .tgz archive from the contents of the web_static
@@ -27,6 +27,7 @@ def do_pack():
         return None
 
 
+@task
 def do_deploy(archive_path):
     """
       Distributes an archive to a server web servers.
