@@ -18,12 +18,12 @@ def do_pack():
           Otherwise, it should return None
     """
     d = datetime.now()
-    file_name = f"web_static_{d.year}{d.month}{d.day}"\
-                f"{d.hour}{d.minute}{d.second}.tgz"
+    file_name = "web_static_{}{}{}".format(d.year, d.month, d.day)
+    file_name += "{}{}{}.tgz".format(d.hour, d.minute, d.second)
     local("mkdir -p versions")
-    res = local(f"tar -cvzf versions/{file_name} web_static")
+    res = local("tar -cvzf versions/{} web_static".format(file_name))
     if res.succeeded:
-        return f"versions/{file_name}"
+        return "versions/{}".format(file_name)
     else:
         return None
 
@@ -42,14 +42,16 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         file_only = archive_path.split("/")[-1]
         file = file_only.split(".")[0]
-        run(f"mkdir -p /data/web_static/releases/{file}")
-        run(f"tar -xzf /tmp/{file}.tgz -C /data/web_static/releases/{file}/")
-        run(f"rm /tmp/{file}.tgz")
-        run(f"rm -rf /data/web_static/current")
-        run(f"mv /data/web_static/releases/{file}/web_static/* "
-            f"/data/web_static/releases/{file}")
-        run(f"rm -rf /data/web_static/releases/{file}/web_static")
-        run(f"ln -s /data/web_static/releases/{file} /data/web_static/current")
+        run("mkdir -p /data/web_static/releases/{}".format(file))
+        run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/"
+            .format(file, file))
+        run("rm /tmp/{}.tgz".format(file))
+        run("rm -rf /data/web_static/current")
+        run("mv /data/web_static/releases/{}/web_static/* "
+            "/data/web_static/releases/{}".format(file, file))
+        run("rm -rf /data/web_static/releases/{}/web_static".format(file))
+        run("ln -s /data/web_static/releases/{} /data/web_static/current"
+            .format(file))
         print("New version deployed!")
         return True
     except Exception:
