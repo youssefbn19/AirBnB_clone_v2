@@ -43,19 +43,20 @@ def do_deploy(archive_path):
         file = file_only.split(".")[0]
         res = run("mkdir -p /data/web_static/releases/{}".format(file))
         res = run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
-            .format(file_only, file))
+                  .format(file_only, file))
         res = run("rm /tmp/{}".format(file_only))
         res = run("rm -rf /data/web_static/current")
         res = run("mv -f /data/web_static/releases/{}/web_static/* "
-            "/data/web_static/releases/{}".format(file, file))
-        res = run("rm -rf /data/web_static/releases/{}/web_static".format(file))
+                  "/data/web_static/releases/{}".format(file, file))
+        res = run("rm -rf /data/web_static/releases/{}/web_static"
+                  .format(file))
         res = run("ln -s /data/web_static/releases/{} /data/web_static/current"
-            .format(file))
+                  .format(file))
         print("New version deployed!")
     except Exception:
         pass
     finally:
-        if res.succeeded: 
-            return True 
+        if res.succeeded:
+            return True
         else:
             return False
