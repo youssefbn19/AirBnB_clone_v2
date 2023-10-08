@@ -6,6 +6,7 @@ from os import path
 from datetime import datetime
 
 env.hosts = ["34.239.255.45", "52.91.182.206"]
+env.user = "ubuntu"
 
 
 def do_pack():
@@ -37,20 +38,24 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
     try:
-        put(archive_path, "/tmp/")
+        res = put(archive_path, "/tmp/")
         file_only = archive_path.split("/")[-1]
         file = file_only.split(".")[0]
-        run("mkdir -p /data/web_static/releases/{}".format(file))
-        run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/"
-            .format(file, file))
-        run("rm /tmp/{}.tgz".format(file))
-        run("rm -rf /data/web_static/current")
-        run("mv /data/web_static/releases/{}/web_static/* "
+        res = run("mkdir -p /data/web_static/releases/{}".format(file))
+        res = run("tar -xzf /tmp/{} -C /data/web_static/releases/{}"
+            .format(file_only, file))
+        res = run("rm /tmp/{}".format(file_only))
+        res = run("rm -rf /data/web_static/current")
+        res = run("mv -f /data/web_static/releases/{}/web_static/* "
             "/data/web_static/releases/{}".format(file, file))
-        run("rm -rf /data/web_static/releases/{}/web_static".format(file))
-        run("ln -s /data/web_static/releases/{} /data/web_static/current"
+        res = run("rm -rf /data/web_static/releases/{}/web_static".format(file))
+        res = run("ln -s /data/web_static/releases/{} /data/web_static/current"
             .format(file))
         print("New version deployed!")
-        return True
     except Exception:
-        return False
+        pass
+    finally:
+        if res.succeeded: 
+            return True 
+        else:
+            return False
