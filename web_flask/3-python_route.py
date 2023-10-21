@@ -3,7 +3,6 @@
     This module starts a Flask web application run on
     a global server in port 5000
 """
-from cgitb import text
 from flask import Flask
 from markupsafe import escape
 app = Flask(__name__)
