@@ -17,6 +17,8 @@ class State(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
+            """A public getter method cities to return the list of City objects
+            from storage linked to the current State"""
             import models
             cities_list = []
             all_cities_list = models.storage.all(City)
