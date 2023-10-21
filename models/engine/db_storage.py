@@ -1,3 +1,4 @@
+""" this module contains the database storage engine for AirBnB project """
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import BaseModel, Base
@@ -22,6 +23,7 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        """ instantiation """
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = 'localhost'
@@ -38,6 +40,8 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
+        """ query on the current database session (self.__session)
+        all objects depending of the class name"""
         all_objects = {}
         if cls is not None:
             if isinstance(cls, str):
@@ -56,17 +60,21 @@ class DBStorage:
         return all_objects
 
     def new(self, obj):
+        """ adds the object to the current database session """
         self.__session.add(obj)
 
     def save(self):
+        """ commit all changes of the current database session """
         self.__session.commit()
 
     def delete(self, obj=None):
+        """ delete from the current database session """
         if obj is not None:
             self.__session.delete(obj)
             self.save()
 
     def reload(self):
+        """ creates database tables and session """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
