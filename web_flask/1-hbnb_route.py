@@ -14,6 +14,7 @@ def hello():
         Display a content when user navigate to the home page
     """
     return 'Hello HBNB!'
+
 @app.route('/hbnb')
 def hbnb():
     """
