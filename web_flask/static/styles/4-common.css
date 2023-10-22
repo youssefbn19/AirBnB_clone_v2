@@ -1,0 +1,25 @@
+*{
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+}
+ol, ul {
+	list-style: none;
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    color: #484848;
+    font-size: 14px;
+	position: relative;
+	min-height: 100vh;
+    font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+html
+{
+	position: relative;
+}
+div.container{
+	max-width: 1000px;
+	margin: 30px auto;
+}
