@@ -15,10 +15,7 @@ body {
 	min-height: 100vh;
     font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-html
-{
-	position: relative;
-}
+
 div.container{
 	max-width: 1000px;
 	margin: 30px auto;
